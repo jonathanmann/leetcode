@@ -1,5 +1,31 @@
 class Solution:
-	def lengthOfLongestSubstring(self, s):  
+	def lengthOfLongestSubstring(self, s):
+		d = {}
+		#ss = [0] 
+		start = -1
+		mx_len = 0
+		for i in range(len(s)):
+			if s[i] not in d:
+				d[s[i]] = i
+			else:
+				if d[s[i]] > start: start = d[s[i]]
+				print 'place : ',i ,'latest : ', d[s[i]],'start : ', start
+				d[s[i]] = i
+			#ss.append(i - start)
+			if i - start > mx_len: mx_len = i - start
+		print d
+		return mx_len
+		#return ss
+
+
+s = Solution()
+st = "ppczpvxsqqarvvawuzwjopsdsfsee"
+#st = "abcdabcrb"
+#st = "ababc"
+#st = "cd"
+print s.lengthOfLongestSubstring(st)
+
+"""
 		if not s:return 0  
 		d = {}  
 		maxlen = i = 0  
@@ -12,7 +38,8 @@ class Solution:
 					i+=1  
 				i+=1  
 			maxlen = max(maxlen, j-i+1)
-		return maxlen 
+		return maxlen
+""" 
 """
 	def lengthOfLongestSubstring(self, s):
 		letters = set()
@@ -42,7 +69,5 @@ class Solution:
 """
 
 
-s = Solution()
-st = "ppczpvxsqqarvvawuzwjopsdsfsee"
-print s.lengthOfLongestSubstring(st)
+
 
