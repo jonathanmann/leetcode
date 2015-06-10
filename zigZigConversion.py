@@ -6,9 +6,6 @@ class Solution:
 		for i in xrange(len(s)):
 			if curr == numRows - 1: d = 0
 			if curr == 0: d = 1
-			print  numRows -1 - abs(numRows - 1 - i % (2 * numRows - 2)),curr
-
-			#final[numRows -1 - abs(numRows - 1 - i % (2 * numRows - 2))].append(s[i])
 			final[curr].append(s[i])
 			if d == 1:curr += 1
 			if d == 0:curr -= 1
