@@ -1,3 +1,15 @@
+
+
+
+
+
+
+
+
+
+
+
+
 class Solution:
     def getKth(self, nums1, nums2, k):
         l1 = len(nums1)
@@ -13,6 +25,7 @@ class Solution:
         p1 = min(k // 2, l1)
         p2 = k - p1
         
+        print nums1,nums2,p1,p2
         if nums1[p1 - 1] <= nums2[p2 - 1]:
             return self.getKth(nums1[p1:], nums2, p2)
         else:
@@ -25,3 +38,8 @@ class Solution:
             return self.getKth(nums1, nums2, (l1 + l2) // 2 + 1)
         else:
             return (self.getKth(nums1, nums2, (l1 + l2) // 2) + self.getKth(nums1, nums2, (l1 + l2) // 2 + 1)) * 0.5 
+        
+nums1 = [1,2,3]
+nums2 = [4,5,6]
+
+print Solution().findMedianSortedArrays(nums1,nums2)
