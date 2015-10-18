@@ -1,5 +1,3 @@
-
-
 class Solution:
 
     """
@@ -16,30 +14,34 @@ class Solution:
     3 : spawing
     """
 
-
     def gameOfLife(self, board):
+        self.board = board
+        self.update_rules = {0:0,1:1,2:0,3:1}
         if board == []: return []
-        num_rows = len(board)
-        num_cols = len(board[0])
-        for i,row in enumerate(board):
-            i_opts = self.get_opts(i,num_rows)
+        self.num_rows = len(self.board)
+        self.num_cols = len(self.board[0])
+        for i,row in enumerate(self.board):
+            i_opts = self.get_opts(i,self.num_rows)
             for j,col in enumerate(row):
-                j_opts = self.get_opts(j,num_cols)
+                j_opts = self.get_opts(j,self.num_cols)
                 pos = [i,j]
-                check_list = self.get_adjacent(i_opts,j_opts,pos)
-                adj_sum = 0
+                nbs = self.get_neighbors(i_opts,j_opts,pos)
+                self.update_tile_value(nbs,i,j)
+        self.update_board()
+        return self.board
 
-                col_list = [] # for checking
+    def update_board(self):
+        for i in range(self.num_rows):
+            for j in range(self.num_cols):
+                self.board[i][j] = self.update_rules[self.board[i][j]]
 
-                for e in check_list:
-                    x,y = e
-                    tile = board[x][y]
-                    if tile == 1 or tile == 2:
-                        adj_sum += 1
-
-                    col_list.append(board[x][y]) # for checking
-                print adj_sum
-                print col_list # for checking
+    def update_tile_value(self,neighbors,i,j):
+        if self.board[i][j] == 0:
+            if neighbors == 3:
+                self.board[i][j] = 3
+        else:
+            if neighbors not in [2,3]:
+                self.board[i][j] = 2
 
     def get_opts(self,pos,lim):
         opts = [pos]
@@ -49,14 +51,21 @@ class Solution:
             opts.append(pos - 1)
         return opts
 
-    def get_adjacent(self,row_opts,col_opts,pos):
-        adj = []
+    def get_neighbors(self,row_opts,col_opts,pos):
+        neighbors = 0
         for e in row_opts:
             for f in col_opts:
                 if [e,f] != pos:
-                    adj.append([e,f])
-        return adj
+                    tile = self.board[e][f]
+                    if tile in [1,2]:
+                        neighbors += 1
+        return neighbors
+
+board = [[0,0,0],[1,0,0],[0,1,0]]
+print Solution().gameOfLife(board)
 
 board = [['00','01','02'],['10','11','12'],['20','21','22']]
-board = [[0,1,0],[1,1,0],[0,1,0]]
-Solution().gameOfLife(board)
+board = [[0,1,0],[1,1,1],[0,1,0]]
+board = [[1,1],[1,0]]
+board = Solution().gameOfLife(board)
+print board
