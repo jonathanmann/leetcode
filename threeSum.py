@@ -25,6 +25,9 @@ class Solution:
                 s.add(e)
         r = list(s)
         return r
+    
+    def get_triplets(self,nums):
+        
 
 
 nums = [1,2,3,4,5]
